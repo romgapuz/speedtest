@@ -1,10 +1,9 @@
-#!/usr/bin/php
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no" />
-<title>HTML5 Speedtest <?php $region=file_get_contents("http://instance-data/latest/meta-data/placement/availability-zone"); echo $region; ?></title>
+<title>AWS Speedtest</title>
 <style type="text/css">
 	html,body{
 		border:none; padding:0; margin:0;
@@ -219,7 +218,7 @@ function initUI(){
 </script>
 </head>
 <body>
-<h1>HTML5 Speedtest</h1>
+<h1>AWS Speedtest (<?php $inst_ident=file_get_contents("http://instance-data/latest/dynamic/instance-identity/document"); $inst_ident_json = json_decode($inst_ident); echo $inst_ident_json->region; ?>)</h1>
 <div id="startStopBtn" onclick="startStop()"></div>
 <div id="test">
 	<div class="testGroup">
@@ -254,7 +253,7 @@ function initUI(){
 		IP Address: <span id="ip"></span>
 	</div>
 </div>
-<a href="https://github.com/adolfintel/speedtest">Source code</a>
+Based on the open source project at <a href="https://github.com/adolfintel/speedtest">https://github.com/adolfintel/speedtest</a>
 <script type="text/javascript">setTimeout(initUI,100);</script>
 </body>
 </html>
