@@ -253,7 +253,7 @@ function initUI(){
 		IP Address: <span id="ip"></span>
 	</div>
 </div>
-Based on the open source project at <a href="https://github.com/adolfintel/speedtest">https://github.com/adolfintel/speedtest</a>
+Based on the open source project at <a href="https://github.com/adolfintel/speedtest" target="_blank">https://github.com/adolfintel/speedtest</a>
 <script type="text/javascript">setTimeout(initUI,100);</script>
 </body>
 </html>
