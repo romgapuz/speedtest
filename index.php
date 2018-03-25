@@ -276,18 +276,19 @@ function calculateBandwidth(){
 		multiplier = 1000000;
 	else
 		multiplier = 1000000000;
-	dldays = ((document.getElementById("bamt").value*multiplier)/I("dlText").textContent)/86400;
-	dldays25 = ((document.getElementById("bamt").value*multiplier)/I("dlText").textContent*0.25)/86400;
-	dldays50 = ((document.getElementById("bamt").value*multiplier)/I("dlText").textContent*0.5)/86400;
-	dldays75 = ((document.getElementById("bamt").value*multiplier)/I("dlText").textContent*0.75)/86400;
+	binmb = document.getElementById("bamt").value*multiplier;
+	dldays = (binmb/I("dlText").textContent)/86400;
+	dldays25 = (binmb/(I("dlText").textContent*0.25))/86400;
+	dldays50 = (binmb/(I("dlText").textContent*0.5))/86400;
+	dldays75 = (binmb/(I("dlText").textContent*0.75))/86400;
 	I("dl100").textContent=moment.duration(dldays, "days").humanize();
 	I("dl25").textContent=moment.duration(dldays25, "days").humanize();
 	I("dl50").textContent=moment.duration(dldays50, "days").humanize();
 	I("dl75").textContent=moment.duration(dldays75, "days").humanize();
-	uldays = ((document.getElementById("bamt").value*multiplier)/I("ulText").textContent)/86400;
-	uldays25 = ((document.getElementById("bamt").value*multiplier)/I("ulText").textContent*0.25)/86400;
-	uldays50 = ((document.getElementById("bamt").value*multiplier)/I("ulText").textContent*0.5)/86400;
-	uldays75 = ((document.getElementById("bamt").value*multiplier)/I("ulText").textContent*0.75)/86400;
+	uldays = (binmb/I("ulText").textContent)/86400;
+	uldays25 = (binmb/(I("ulText").textContent*0.25))/86400;
+	uldays50 = (binmb/(I("ulText").textContent*0.5))/86400;
+	uldays75 = (binmb/(I("ulText").textContent*0.75))/86400;
 	I("ul100").textContent=moment.duration(uldays, "days").humanize();
 	I("ul25").textContent=moment.duration(uldays25, "days").humanize();
 	I("ul50").textContent=moment.duration(uldays50, "days").humanize();
@@ -298,7 +299,7 @@ function calculateBandwidth(){
 <script type="text/javascript" src="moment.min.js"></script>
 </head>
 <body>
-<h1>AWS Speedtest <!--(<?php $inst_ident=file_get_contents("http://instance-data/latest/dynamic/instance-identity/document"); $inst_ident_json = json_decode($inst_ident); echo $inst_ident_json->region; ?>)--></h1>
+<h1>AWS Speedtest (<?php $inst_ident=file_get_contents("http://instance-data/latest/dynamic/instance-identity/document"); $inst_ident_json = json_decode($inst_ident); echo $inst_ident_json->region; ?>)</h1>
 <div id="startStopBtn" onclick="startStop()"></div>
 <div id="test">
 	<div class="testGroup">
