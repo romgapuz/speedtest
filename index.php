@@ -101,7 +101,53 @@
 			margin: 0 auto;
 		}
 	}
-
+	.divTable{
+		display: table;
+		width: 769px;
+		margin: 0 auto;
+	}
+	.divTableRow {
+		display: table-row;
+	}
+	.divTableHeading {
+		background-color: #EEE;
+		display: table-header-group;
+	}
+	.divTableCell, .divTableHead {
+		border: 1px solid #999999;
+		display: table-cell;
+		padding: 3px 10px;
+	}
+	.divTableHeading {
+		background-color: #EEE;
+		display: table-header-group;
+		font-weight: bold;
+	}
+	.divTableFoot {
+		background-color: #EEE;
+		display: table-footer-group;
+		font-weight: bold;
+	}
+	.divTableBody {
+		display: table-row-group;
+	}
+	#calculateBandwidthBtn{
+		display:inline-block;
+		margin:0 auto;
+		color:#6060AA;
+		background-color:rgba(0,0,0,0);
+		border:0.15em solid #6060FF;
+		border-radius:0.3em;
+		transition:all 0.3s;
+		box-sizing:border-box;
+		width:8em; height:3em;
+		line-height:2.7em;
+		cursor:pointer;
+		box-shadow: 0 0 0 rgba(0,0,0,0.1), inset 0 0 0 rgba(0,0,0,0.1);
+	}
+	#calculateBandwidthBtn:hover{
+		box-shadow: 0 0 2em rgba(0,0,0,0.1), inset 0 0 1em rgba(0,0,0,0.1);
+	}
 </style>
 <script type="text/javascript">
 function I(id){return document.getElementById(id);}
@@ -213,12 +259,40 @@ function initUI(){
 	I("pingText").textContent="";
 	I("jitText").textContent="";
 	I("ip").textContent="";
+	I("dl25").textContent="";
+	I("dl50").textContent="";
+	I("dl75").textContent="";
+	I("dl100").textContent="";
+	I("ul25").textContent="";
+	I("ul50").textContent="";
+	I("ul75").textContent="";
+	I("ul100").textContent="";
+}
+function calculateBandwidth(){
+	multiplier = 0;
+	if (document.getElementById("bunit").value=="GB")
+		multiplier = 1000;
+	else if (document.getElementById("bunit").value=="TB")
+		multiplier = 1000000;
+	else
+		multiplier = 1000000000;
+	dldays = ((document.getElementById("bamt").value*multiplier)/I("dlText").textContent)/86400;
+	I("dl100").textContent=moment.duration(dldays, "days").humanize();
+	I("dl25").textContent=moment.duration(dldays*0.25, "days").humanize();
+	I("dl50").textContent=moment.duration(dldays*0.5, "days").humanize();
+	I("dl75").textContent=moment.duration(dldays*0.75, "days").humanize();
+	uldays = ((document.getElementById("bamt").value*multiplier)/I("ulText").textContent)/86400;
+	I("ul100").textContent=moment.duration(uldays, "days").humanize();
+	I("ul25").textContent=moment.duration(uldays*0.25, "days").humanize();
+	I("ul50").textContent=moment.duration(uldays*0.5, "days").humanize();
+	I("ul75").textContent=moment.duration(uldays*0.75, "days").humanize();
 }
 
 </script>
+<script type="text/javascript" src="moment.min.js"></script>
 </head>
 <body>
-<h1>AWS Speedtest (<?php $inst_ident=file_get_contents("http://instance-data/latest/dynamic/instance-identity/document"); $inst_ident_json = json_decode($inst_ident); echo $inst_ident_json->region; ?>)</h1>
+<h1>AWS Speedtest <!--(<?php $inst_ident=file_get_contents("http://instance-data/latest/dynamic/instance-identity/document"); $inst_ident_json = json_decode($inst_ident); echo $inst_ident_json->region; ?>)--></h1>
 <div id="startStopBtn" onclick="startStop()"></div>
 <div id="test">
 	<div class="testGroup">
@@ -252,6 +326,47 @@ function initUI(){
 	<div id="ipArea">
 		IP Address: <span id="ip"></span>
 	</div>
+	<br />
+	<h3>Bandwith Calculator</h3>
+	<div>
+		Based on your current bandwidth, to download/upload <input id="bamt" type="number" value="100" /> <select id="bunit">
+			<option value="GB" selected>GB</option>
+			<option value="TB">TB</option>
+			<option value="PB">PB</option>
+		</select> the estimated time to finish is below:
+	</div>
+	<br />
+	<div class="divTable">
+		<div class="divTableBody">
+			<div class="divTableRow">
+				<div class="divTableCell"><b>Utilization</b></div>
+				<div class="divTableCell"><b>Download</b></div>
+				<div class="divTableCell"><b>Upload</b></div>
+			</div>
+			<div class="divTableRow">
+				<div class="divTableCell"><b>25%</b></div>
+				<div class="divTableCell"><div id="dl25"></div></div>
+				<div class="divTableCell"><div id="ul25"></div></div>
+			</div>
+			<div class="divTableRow">
+				<div class="divTableCell"><b>50%</b></div>
+				<div class="divTableCell"><div id="dl50"></div></div>
+				<div class="divTableCell"><div id="ul50"></div></div>
+			</div>
+			<div class="divTableRow">
+				<div class="divTableCell"><b>75%</b></div>
+				<div class="divTableCell"><div id="dl75"></div></div>
+				<div class="divTableCell"><div id="ul75"></div></div>
+			</div>
+			<div class="divTableRow">
+				<div class="divTableCell"><b>100%</b></div>
+				<div class="divTableCell"><div id="dl100"></div></div>
+				<div class="divTableCell"><div id="ul100"></div></div>
+			</div>
+		</div>
+	</div>
+	<br />
+	<div id="calculateBandwidthBtn" onclick="calculateBandwidth()">Calculate</div>
 </div>
 Based on the open source project at <a href="https://github.com/adolfintel/speedtest" target="_blank">https://github.com/adolfintel/speedtest</a>
 <script type="text/javascript">setTimeout(initUI,100);</script>
