@@ -7,7 +7,7 @@
 <style type="text/css">
 	html,body{
 		border:none; padding:0; margin:0;
-		background:#FFFFFF;
+		background:#FFFFF0;
 		color:#202020;
 	}
 	body{
